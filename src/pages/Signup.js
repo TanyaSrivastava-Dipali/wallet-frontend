@@ -1,7 +1,77 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Navbar from "../components/UI/Navbar";
+import useInput from "../hooks/use-input";
+import AxiosInstance from "../utils/axiosInstance";
+
+const isNotEmpty = (value) => value.trim() !== '';
+const isEmail = (value) => value.includes('@');
+
 export default function Signup() {
+    const {
+        value: nameValue,
+        isValid: nameIsValid,
+        hasError: nameHasError,
+        valueChangeHandler: nameChangeHandler,
+        inputBlurHandler: nameBlurHandler,
+        reset: resetName,
+      } = useInput(isNotEmpty);
+      const {
+        value: passValue,
+        isValid: passIsValid,
+        hasError: passHasError,
+        valueChangeHandler: passChangeHandler,
+        inputBlurHandler: passBlurHandler,
+        reset: resetPass,
+      } = useInput(isNotEmpty);
+      const {
+        value: cpassValue,
+        isValid: cpassIsValid,
+        hasError: cpassHasError,
+        valueChangeHandler: cpassChangeHandler,
+        inputBlurHandler: cpassBlurHandler,
+        reset: resetcPass,
+      } = useInput(isNotEmpty);
+      const {
+        value: emailValue,
+        isValid: emailIsValid,
+        hasError: emailHasError,
+        valueChangeHandler: emailChangeHandler,
+        inputBlurHandler: emailBlurHandler,
+        reset: resetEmail,
+      } = useInput(isEmail);
+
+      let formIsValid = false;
+
+      if (nameIsValid && passIsValid  && cpassIsValid && emailIsValid) {
+        formIsValid = true;
+      }
+    
+      const submitHandler = async(event) => {
+        event.preventDefault();
+     if (passValue !== cpassValue) {
+            alert("password and confirm password didn't match");
+         } 
+         else{
+        let response = await AxiosInstance.post("/api/user/register", {
+            name:nameValue,
+            email: emailValue,
+            pass: passValue,
+            confirmPass: cpassValue,
+            role:"admin"
+      });
+      if (response.status === 201) {
+         alert("user Signed up Successfully");
+      } else {
+        alert("Something Went Wrong, Try again");
+      }
+      resetName();
+      resetPass();
+      resetcPass();
+      resetEmail();
+         }
+
+      };
     return (
         <div>
             <Navbar/>
@@ -13,7 +83,7 @@ export default function Signup() {
                  
                 </div>
                 <div className="w-full px-6 py-5 mt-5 overflow-hidden bg-gray shadow-md sm:max-w-md sm:rounded-lg border border-black-200">
-                    <form>
+                    <form onSubmit={submitHandler}>
                         <div>
                             <label
                                 htmlFor="name"
@@ -25,8 +95,12 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     name="name"
+                                    value={nameValue}
+                                    onChange={nameChangeHandler}
+                                    onBlur={nameBlurHandler}
                                     className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
+                                          {nameHasError && <p className="text-red-700">Please enter a first name.</p>}
                             </div>
                         </div>
                         <div className="mt-5">
@@ -40,8 +114,12 @@ export default function Signup() {
                                 <input
                                     type="email"
                                     name="email"
+                                    value={emailValue}
+                                    onChange={emailChangeHandler}
+                                    onBlur={emailBlurHandler}
                                     className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
+                                        {emailHasError && <p className="text-red-700">Please enter a valid email address.</p>}
                             </div>
                         </div>
                         <div className="mt-5">
@@ -55,8 +133,12 @@ export default function Signup() {
                                 <input
                                     type="password"
                                     name="pass"
+                                    value={passValue}
+                                    onChange={passChangeHandler}
+                                    onBlur={passBlurHandler}
                                     className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
+                                              {passHasError && <p className="text-red-700">Password can't be empty.</p>}
                             </div>
                         </div>
                         <div className="mt-5">
@@ -70,8 +152,12 @@ export default function Signup() {
                                 <input
                                     type="password"
                                     name="confirmPass"
+                                    value={cpassValue}
+                                    onChange={cpassChangeHandler}
+                                    onBlur={cpassBlurHandler}
                                     className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
+                                                                        {cpassHasError && <p className="text-red-700">Confirm Password can't be empty.</p>}
                             </div>
                         </div>
                         <div className="flex items-center justify-end mt-5">
@@ -82,8 +168,10 @@ export default function Signup() {
                                 Already have an account? Log in
                             </Link>
                             <button
+                                disabled={!formIsValid}
                                 type="submit"
                                 className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
+                                
                             >
                                 Signup
                             </button>

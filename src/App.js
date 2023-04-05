@@ -12,6 +12,7 @@ import Transfer from './components/Transaction/Transfer';
 import Transaction from './components/Transaction/GetTransactionDetail';
 import AllTransactions from './components/Transaction/GetAllTransaction';
 import GetUser from './components/User/GetUser';
+import GetBalance from './components/User/GetBalance';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route  path='/user/deposit/' element={  < Deposit/>} />
         <Route  path='/user/withdraw/' element={  < Withdraw/>} />
         <Route  path='/user/transfer' element={  < Transfer/>} />
+        <Route  path='/user/getBalance' element={  < GetBalance/>} />
         <Route  path='/user/getTransaction' element={  < Transaction/>} />
         <Route  path='/user/getAllTransaction' element={  < AllTransactions/>} />
         <Route path='*' element={ <NotFound />}/>
