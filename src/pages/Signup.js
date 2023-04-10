@@ -60,6 +60,7 @@ export default function Signup() {
             confirmPass: cpassValue,
             role:"admin"
       });
+      console.log(response);
       if (response.status === 201) {
          alert("user Signed up Successfully");
       } else {

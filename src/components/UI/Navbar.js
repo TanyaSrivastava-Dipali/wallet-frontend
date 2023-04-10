@@ -17,7 +17,7 @@ const Navbar = () => {
           {nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20} />}
       </div>
      
-      <ul className={nav ? 'fixed right-0 top-20 w-[8%] h-auto border-r border-r-gray-900 bg-gray-100 ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
+      <ul className={nav ? 'fixed right-0 top-20 w-[8%] h-auto border-r z-50 border-r-gray-900 bg-gray-100 ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
        <NavLink to='/home'>
   {({ isActive }) => (
     <li

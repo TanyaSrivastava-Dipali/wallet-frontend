@@ -78,7 +78,7 @@ const ChangePassword = () => {
         }
     return (
         <div>
-            <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-100">
+            <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0">
                 <div>
                 <h3 className="text-4xl  text-black">
                            Welcome back!

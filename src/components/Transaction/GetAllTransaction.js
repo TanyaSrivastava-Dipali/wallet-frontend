@@ -40,8 +40,25 @@ const AllTransactions = () => {
         </ul>
 ));
     return (
-        <p  >AllTransactions :- {x} </p>
-   
+       
+        <div className='mb-40'>
+           <p  className='mt-10 text-black text-2xl font-bold'>AllTransactions :-</p>
+        {trx[0] && <p>
+            {trx.map((t)=>(
+<ul className="mt-10 text-black border-solid border-2 border-blue-900 ">
+     <li><b className="text-red-900"> key :</b>{t.ethTRXHash}</li>
+       <li><b className="text-red-900"> Sender :</b>{t.sender}</li>
+       <li><b className="text-red-900"> Receiver:</b>{t.receiver}</li>
+       <li><b className="text-red-900">   Sender Wallet Address:</b>{t.SenderWalletAddress}</li>
+       <li><b className="text-red-900">  Receiver Wallet Address:</b>{t.ReceiverWalletAddress}</li>
+       <li><b className="text-red-900">  amount:</b>{t.amount}</li>
+       <li><b className="text-red-900"> Token:</b>{t.token}</li>
+       <li><b className="text-red-900">  Eth Transaction hash:</b>{t.ethTRXHash}</li>
+</ul>
+            ))}
+          </p>
+}
+        </div>
     );
     }
   export default AllTransactions;

@@ -1,5 +1,6 @@
-import React from "react";
+import {React,useState} from "react";
 import { Link } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import Navbar from "../components/UI/Navbar";
 import useInput from "../hooks/use-input";
 import AxiosInstance from "../utils/axiosInstance";
@@ -8,6 +9,7 @@ const isNotEmpty = (value) => value.trim() !== '';
 const isEmail = (value) => value.includes('@');
 
 const Login = () => {
+    const [loginStatus,setLoginStatus]=useState(false);
     const {
         value: emailValue,
         isValid: emailIsValid,
@@ -44,7 +46,7 @@ const Login = () => {
       
       console.log(response);
       if (response.status === 200) {
-         alert("user logged in Successfully");
+        setLoginStatus(true);
       } else {
         alert("Something Went Wrong, Try again");
       }
@@ -52,6 +54,9 @@ const Login = () => {
         resetPass();
         resetEmail();
       };
+      if (loginStatus) {
+        return <Navigate replace to="/dashboard" />;
+        }
     return (
         <div>
              <Navbar/>

@@ -4,15 +4,7 @@ import AxiosInstance from "../../utils/axiosInstance";
 const isNotEmpty = (value) => value.trim() !== '';
 
 const Deposit = () => {
-  const {
-    value: addressValue,
-    isValid: addressIsValid,
-    hasError: addressHasError,
-    valueChangeHandler: addressChangeHandler,
-    inputBlurHandler: addressBlurHandler,
-    reset: resetAddress,
-  } = useInput(isNotEmpty);
-
+  const [tokenAddress, setTokenAddress] = useState("");
 const {
     value: amountValue,
     isValid: amountIsValid,
@@ -25,14 +17,15 @@ const {
 
   let formIsValid = false;
 
-  if (addressIsValid && amountIsValid  ) {
+  if (amountIsValid  ) {
     formIsValid = true;
   }
   const submitHandler = async (event) => {
     event.preventDefault();
+
     let response = await fetch("/api/user/deposit",  {method: 'POST',
     headers: {'Content-Type': 'application/json'},body:JSON.stringify({
-        tokenAddress: addressValue,
+        tokenAddress: tokenAddress,
         amount: amountValue
   })});
   
@@ -44,13 +37,13 @@ const {
      } else {
        alert("Something Went Wrong, Try again");
      }
-   
-     resetAddress();
+
      resetAmount();
   };
   return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6  sm:pt-0 bg-gray-100">
+      <div className="flex flex-col sm:justify-center  items-center min-h-screen pt-6  sm:pt-0">
+
         <div>
           <p className="text-2xl  text-black">
             Please enter details to deposit.
@@ -66,15 +59,14 @@ const {
                 Token
               </label>
               <div className="flex flex-col items-start">
-                                <input
-                                    type="text"
-                                    name="tokenAddress"
-                                    value={addressValue}
-                                    onChange={addressChangeHandler}
-                                    onBlur={addressBlurHandler}
-                                    className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                />
-                                  {addressHasError && <p className="text-red-700">Please enter a valid Token address.</p>}
+              <select value={tokenAddress} onChange={ (e) => {
+    setTokenAddress(e.target.value);
+              }}    className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+        <option value="0x5FbDB2315678afecb367f032d93F642f64180aa3">VNC</option>
+        <option value="0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512">$</option>
+        <option value="0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0">USD</option>
+      </select>
+
                             </div>
             </div>
             <div >
