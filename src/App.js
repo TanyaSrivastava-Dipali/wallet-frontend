@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ResetPassword from './components/User/ResetPassword';
 import Dashboard from './components/UI/Dashboard';
+import Verify from './components/User/verifyEmail';
 // import ChangePassword from './components/User/ChangePassword';
 // import Deposit from './components/User/Deposit';
 // import Withdraw from './components/User/Withdraw';
@@ -13,7 +14,7 @@ import Dashboard from './components/UI/Dashboard';
 // import AllTransactions from './components/Transaction/GetAllTransaction';
 // import GetUser from './components/User/GetUser';
 // import GetBalance from './components/User/GetBalance';
-import Verify from './components/User/verifyEmail';
+
 
 function App() {
   return (

@@ -73,11 +73,14 @@ const ChangePassword = () => {
         resetNewPass();
         resetcNewPass();
       };
-      if (stateChanged) {
-          return <Navigate replace to="/login" />;
-        }
+    //   if (stateChanged) {
+    //       return <Navigate replace to="/login" />;
+    //     }
     return (
         <div>
+              {stateChanged ?(
+                <Navigate replace to="/login" />
+            ): (
             <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0">
                 <div>
                 <h3 className="text-4xl  text-black">
@@ -176,7 +179,7 @@ const ChangePassword = () => {
                             </div>
                     </form>
                 </div>
-            </div>
+            </div>)}
         </div>
     );
   };

@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 import Navbar from "../components/UI/Navbar";
 import useInput from "../hooks/use-input";
-import AxiosInstance from "../utils/axiosInstance";
 
 const isNotEmpty = (value) => value.trim() !== '';
 const isEmail = (value) => value.includes('@');
 
 const Login = () => {
     const [loginStatus,setLoginStatus]=useState(false);
+    const [user,setUser]=useState("");
     const {
         value: emailValue,
         isValid: emailIsValid,
@@ -42,11 +42,10 @@ const Login = () => {
             email: emailValue,
             pass: passValue
       })});
-      
-      
-      console.log(response);
+      const res=await response.json()
       if (response.status === 200) {
         setLoginStatus(true);
+        setUser(res.name);
       } else {
         alert("Something Went Wrong, Try again");
       }
@@ -54,12 +53,15 @@ const Login = () => {
         resetPass();
         resetEmail();
       };
-      if (loginStatus) {
-        return <Navigate replace to="/dashboard" />;
-        }
+    //   if (loginStatus) {
+    //     return <Navigate replace to="/dashboard" state={ {user:user, isLoggedIn:loginStatus}}/>;
+    //     }
     return (
-        <div>
+     <div>
              <Navbar/>
+             {loginStatus ?(
+                <Navigate replace to="/dashboard" state={ {user:user, isLoggedIn:loginStatus}}/>
+            ): (
             <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-100">
                 <div>
                 <h3 className="text-4xl  text-black">
@@ -134,8 +136,9 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>)}
         </div>
+
     );
   };
   

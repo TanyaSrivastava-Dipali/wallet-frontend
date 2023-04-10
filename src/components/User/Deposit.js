@@ -4,7 +4,7 @@ import AxiosInstance from "../../utils/axiosInstance";
 const isNotEmpty = (value) => value.trim() !== '';
 
 const Deposit = () => {
-  const [tokenAddress, setTokenAddress] = useState("");
+  const [tokenAddress, setTokenAddress] = useState("0x5FbDB2315678afecb367f032d93F642f64180aa3");
 const {
     value: amountValue,
     isValid: amountIsValid,

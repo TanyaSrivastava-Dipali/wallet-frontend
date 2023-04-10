@@ -1,4 +1,4 @@
-import React from "react";
+import {React,useState} from "react";
 import { Link } from 'react-router-dom';
 import Navbar from "../components/UI/Navbar";
 import useInput from "../hooks/use-input";
@@ -8,6 +8,7 @@ const isNotEmpty = (value) => value.trim() !== '';
 const isEmail = (value) => value.includes('@');
 
 export default function Signup() {
+    const [role, setRole] = useState("user");
     const {
         value: nameValue,
         isValid: nameIsValid,
@@ -41,6 +42,9 @@ export default function Signup() {
         reset: resetEmail,
       } = useInput(isEmail);
 
+const roleChangeHandler=(event)=> {
+    setRole(event.target.value);
+}
       let formIsValid = false;
 
       if (nameIsValid && passIsValid  && cpassIsValid && emailIsValid) {
@@ -58,7 +62,7 @@ export default function Signup() {
             email: emailValue,
             pass: passValue,
             confirmPass: cpassValue,
-            role:"admin"
+            role:role
       });
       console.log(response);
       if (response.status === 201) {
@@ -121,6 +125,18 @@ export default function Signup() {
                                     className="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                                         {emailHasError && <p className="text-red-700">Please enter a valid email address.</p>}
+                            </div>
+                        </div>
+                        <div className="mt-5">
+                            <label
+                                htmlFor="role"
+                                className="block text-sm font-medium text-gray-700 undefined"
+                            >
+                                Role
+                            </label>
+                            <div className="flex items-center cursor-pointer mr-4 mb-4 text-gray-700" onChange={roleChangeHandler}>
+                            <input type="radio" value="user" name="role" checked={role === "user"} className=" mr-1 ml-2 " /> User
+                            <input type="radio" value="admin" name="role" checked={role === "admin"} className="ml-5 mr-1"/> Admin
                             </div>
                         </div>
                         <div className="mt-5">

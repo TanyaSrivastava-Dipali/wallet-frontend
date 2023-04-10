@@ -54,6 +54,18 @@ const Navbar = () => {
     </li>
   )}
 </NavLink>
+<NavLink to='/verify'>
+  {({ isActive }) => (
+    <li
+      className={[
+        "cursor-pointer p-4 border-b border-black",
+      isActive ? "text-yellow-600 font-bold bg-black" : "text-black font-bold"
+      ].join(" ")}
+    >
+      Verify Email
+    </li>
+  )}
+</NavLink>
 <NavLink to='/login'>
   {({ isActive }) => (
     <li
