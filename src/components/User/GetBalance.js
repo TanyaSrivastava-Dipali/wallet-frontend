@@ -4,6 +4,7 @@ import useInput from "../../hooks/use-input";
 
 const GetBalance = () => {
   const isEmail = (value) => value.includes("@");
+  const [isLoading, setIsLoading] = useState(false);
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -16,6 +17,7 @@ const GetBalance = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     // const response = await AxiosInstance(`api/user/getUser/${inputEmail}`);
     const response = await axios.get(
       `http://localhost:3000/api/user/getBalance/${emailValue}`,
@@ -38,6 +40,7 @@ const GetBalance = () => {
       });
     }
     setBalance(tokenBalance);
+    setIsLoading(false);
   };
   return (
     <div>
@@ -85,6 +88,7 @@ const GetBalance = () => {
           </form>
         </div>
         <div>
+          {isLoading && <p>Loading...</p>}
           {balance[0] && (
             <p>
               {balance.map((id) => (

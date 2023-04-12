@@ -7,7 +7,7 @@ const Transfer = () => {
   const [tokenAddress, setTokenAddress] = useState(
     "0xFca8b74A353521597a5aAb14259d7E3f9b6148dE"
   );
-
+  const [isLoading, setIsLoading] = useState(false);
   const {
     value: amountValue,
     isValid: amountIsValid,
@@ -33,6 +33,7 @@ const Transfer = () => {
   }
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     let response = await fetch("/api/transaction/transfer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,6 +46,7 @@ const Transfer = () => {
     console.log(await response.json());
     // const result = response.data.user;
     // console.log(result);
+    setIsLoading(false);
     if (response.status === 200) {
       alert("Transfer Successfully and sent transaction details to mail");
     } else {
@@ -146,6 +148,7 @@ const Transfer = () => {
             </div>
           </form>
         </div>
+        {isLoading && <p>Loading...</p>}
       </div>
     </div>
   );

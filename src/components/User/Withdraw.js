@@ -7,6 +7,7 @@ const Withdraw = () => {
   const [tokenAddress, setTokenAddress] = useState(
     "0xFca8b74A353521597a5aAb14259d7E3f9b6148dE"
   );
+  const [isLoading, setIsLoading] = useState(false);
   const {
     value: amountValue,
     isValid: amountIsValid,
@@ -32,6 +33,7 @@ const Withdraw = () => {
   }
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     let response = await fetch("/api/user/withdraw", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -44,12 +46,13 @@ const Withdraw = () => {
     console.log(response);
     // const result = response.data.user;
     // console.log(result);
+    setIsLoading(false);
     if (response.status === 200) {
       alert("amount Withdrawn Successfully");
     } else {
       alert("Something Went Wrong, Try again");
     }
-
+    setIsLoading(false);
     resetAmount();
     resetEmail();
   };
@@ -145,6 +148,7 @@ const Withdraw = () => {
             </div>
           </form>
         </div>
+        {isLoading && <p>Loading...</p>}
       </div>
     </div>
   );
